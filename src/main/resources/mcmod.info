@@ -1,9 +1,10 @@
 [
 {
-  "modid": "bdlib",
-  "name": "BD Lib",
+  "modid": "${modId}",
+  "name": "${modName}",
   "description": "",
-  "version": "@BDLIB_VER@",
+  "version": "${modVersion}",
+  "mcversion": "${minecraftVersion}",
   "url": "bdew.net/mods/",
   "updateUrl": "",
   "authorList": [

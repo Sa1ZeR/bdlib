@@ -17,7 +17,7 @@ import net.bdew.lib.tooltip.TooltipHandler
 import net.minecraft.command.CommandHandler
 import org.apache.logging.log4j.Logger
 
-@Mod(modid = "bdlib", name = "BD lib", version = "BDLIB_VER", modLanguage = "scala")
+@Mod(modid = "bdlib", name = "BD lib", version = "GRADLETOKEN_VERSION", modLanguage = "scala")
 object BdLib {
   var log: Logger = null
 
@@ -34,7 +34,7 @@ object BdLib {
   @EventHandler
   def preInit(ev: FMLPreInitializationEvent) {
     log = ev.getModLog
-    log.info("bdlib BDLIB_VER loaded")
+    log.info("bdlib GRADLETOKEN_VERSION loaded")
     log.debug("List of loaded APIs: " + ApiReporter.APIs)
     FMLCommonHandler.instance().registerCrashCallable(ApiReporter)
     NetHandler.init()
