@@ -9,29 +9,28 @@
 
 package net.bdew.lib.network
 
-import java.io.{ObjectInputStream, ObjectOutputStream}
-
 import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.network.PacketBuffer
 
 class ItemStackSerialize(var stack: ItemStack) extends Serializable {
-  private def writeObject(out: ObjectOutputStream) {
-    out.writeShort(Item.getIdFromItem(stack.getItem))
-    out.writeByte(stack.stackSize)
-    out.writeShort(stack.getItemDamage)
+  private def writeObject(p: PacketBuffer) {
+    p.writeShort(Item.getIdFromItem(stack.getItem))
+    p.writeByte(stack.stackSize)
+    p.writeShort(stack.getItemDamage)
     if (stack.hasTagCompound)
-      out.writeObject(NBTHelper.toBytes(stack.getTagCompound))
+      p.writeNBTTagCompoundToBuffer(stack.getTagCompound)
     else
-      out.writeObject(null)
+      p.writeNBTTagCompoundToBuffer(null)
   }
 
-  private def readObject(in: ObjectInputStream) {
-    val id = in.readShort()
-    val sz = in.readByte()
-    val dmg = in.readShort()
+  private def readObject(p: PacketBuffer) {
+    val id = p.readShort()
+    val sz = p.readByte()
+    val dmg = p.readShort()
     stack = new ItemStack(Item.getItemById(id), sz, dmg)
-    val obj = in.readObject().asInstanceOf[Array[Byte]]
+    val obj = p.readNBTTagCompoundFromBuffer();
     if (obj != null)
-      stack.setTagCompound(NBTHelper.fromBytes(obj))
+      stack.setTagCompound(obj)
   }
 }
 
